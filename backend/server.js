@@ -35,7 +35,14 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://blockchain-project-ivory.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(limiter);
 
