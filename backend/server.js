@@ -13,6 +13,7 @@ const { Blockchain } = require("./blockchain");
 require("./utils/expiryChecker");
 
 const app = express();
+app.set("trust proxy", 1);
 
 // ========================
 // RATE LIMITERS
