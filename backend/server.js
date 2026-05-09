@@ -39,6 +39,8 @@ const authLimiter = rateLimit({
 app.use(
   cors({
     origin: [
+      "http://localhost:5173",
+      "http://10.76.106.147:5173",
       "https://blockchain-project-ivory.vercel.app",
     ],
     credentials: true,
