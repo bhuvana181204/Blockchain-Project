@@ -23,24 +23,37 @@ function getLanIp() {
 }
 
 function getFrontendUrl(req) {
+  // 1. Use deployed frontend if available
+  if (
+    process.env.FRONTEND_URL &&
+    !process.env.FRONTEND_URL.includes("YOUR_LAN_IP")
+  ) {
+    return process.env.FRONTEND_URL;
+  }
+
+  // 2. Use LAN IP for mobile testing in local network
   const lanIp = getLanIp();
   if (lanIp) {
     const port = process.env.FRONTEND_PORT || 5173;
     return `http://${lanIp}:${port}`;
   }
-  const envUrl = process.env.FRONTEND_URL || "";
-  if (envUrl && !envUrl.includes("YOUR_LAN_IP")) {
-    return envUrl;
-  }
+
+  // 3. Use request host fallback
   if (req) {
     const proto = req.protocol || "http";
-    const host  = req.get("host") || "localhost:5173";
-    const frontendHost = host.replace(/:\d+$/, `:${process.env.FRONTEND_PORT || 5173}`);
+    const host = req.get("host") || "localhost:5173";
+
+    const frontendHost = host.replace(
+      /:\d+$/,
+      `:${process.env.FRONTEND_PORT || 5173}`
+    );
+
     return `${proto}://${frontendHost}`;
   }
+
+  // 4. Final fallback
   return "http://localhost:5173";
 }
-
 const router = express.Router();
 
 router.post("/add", auth, authorizeRole("hospital"), async (req, res) => {
