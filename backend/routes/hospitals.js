@@ -153,7 +153,9 @@ router.post(
       });
 
       const unitId = uuidv4();
-      const verifyUrl = `http://localhost:5173/verify/${unitId}`;
+      const FRONTEND_URL =
+  process.env.FRONTEND_URL || "https://blockchain-project-ivory.vercel.app";
+const verifyUrl = `${FRONTEND_URL}/verify/${unitId}`;
       const qrImage = await QRCode.toDataURL(verifyUrl);
 
       const inventoryItem = await Inventory.create({

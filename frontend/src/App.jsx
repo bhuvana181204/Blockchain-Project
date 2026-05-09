@@ -374,7 +374,7 @@ export default function App() {
 
         <footer className="app-footer">
           <p>
-            BloodChain — Secure Blockchain Blood Bank System &nbsp;|&nbsp; ©{" "}
+            BloodChain - Secure Blockchain Blood Bank System &nbsp;|&nbsp; ©{" "}
             {new Date().getFullYear()}
           </p>
         </footer>
